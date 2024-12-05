@@ -12,12 +12,11 @@ class Bank:
     def deposit(self):
         for _ in range(100):
             amount = random.randint(50, 500)
-            with self.lock:  # Блокируем
-                self.balance += amount
-                print(f"Пополнение: {amount}. Баланс: {self.balance}")
-                # Если баланс >= 500 и lock заблокирован, то разблокируем его
-                if self.balance >= 500 and self.lock.locked():
-                    self.lock.release()
+            self.balance += amount
+            print(f"Пополнение: {amount}. Баланс: {self.balance}")
+            # Если баланс >= 500 и lock заблокирован, то разблокируем его
+            if self.balance >= 500 and self.lock.locked():
+                self.lock.release()
             time.sleep(0.001)
 
     def take(self):
